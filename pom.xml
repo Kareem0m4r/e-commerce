@@ -90,7 +90,7 @@
 				<configuration>
 					<source>1.8</source> <!-- depending on your project -->
 					<target>1.8</target> <!-- depending on your project -->
-					<useIncrementalCompilation>false</useIncrementalCompilation>
+					<!--useIncrementalCompilation>false</useIncrementalCompilation-->
 					<annotationProcessorPaths>
 						<path>
 							<groupId>org.mapstruct</groupId>

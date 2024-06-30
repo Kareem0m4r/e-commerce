@@ -1,17 +1,14 @@
 package com.mytask.e_commerce.service;
 
-import com.mytask.e_commerce.dto.ShoppingCartDTO;
 import com.mytask.e_commerce.dto.UserDTO;
 import com.mytask.e_commerce.mapper.ShoppingCartMapper;
 import com.mytask.e_commerce.mapper.UserMapper;
-import com.mytask.e_commerce.model.ShoppingCart;
 import com.mytask.e_commerce.model.User;
 import com.mytask.e_commerce.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService{

@@ -3,9 +3,13 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.engine.internal.Cascade;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "shopping_cart")
@@ -22,15 +26,15 @@ public class ShoppingCart {
     private User user;
 
     @Column(name = "total_cost")
-    private long totalCost;
+    private BigDecimal totalCost;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
-            name = "shopping_list_product",
-            joinColumns = @JoinColumn(name = "Shopping_list_id"),
+            name = "cart_product",
+            joinColumns = @JoinColumn(name = "cart_id"),
             inverseJoinColumns = @JoinColumn(name = "product_id")
     )
-    private List<Product> productShoppingCartsList = new ArrayList<>();
+    private Set<Product> products = new HashSet<>();
 
     @Column(name = "checked_out")
     private boolean checkedOut = false;
@@ -38,9 +42,12 @@ public class ShoppingCart {
     public ShoppingCart(){
 
     }
-    public ShoppingCart(long totalCost, List<Product> productList) {
+
+    public ShoppingCart(User user, BigDecimal totalCost, Set<Product> products, boolean checkedOut) {
+        this.user = user;
         this.totalCost = totalCost;
-        this.productShoppingCartsList = productList;
+        this.products = products;
+        this.checkedOut = checkedOut;
     }
 
     public long getShoppingCartId() {
@@ -59,20 +66,20 @@ public class ShoppingCart {
         this.user = user;
     }
 
-    public long getTotalCost() {
+    public BigDecimal getTotalCost() {
         return totalCost;
     }
 
-    public void setTotalCost(long totalCost) {
+    public void setTotalCost(BigDecimal totalCost) {
         this.totalCost = totalCost;
     }
 
-    public List<Product> getProductShoppingCartsList() {
-        return productShoppingCartsList;
+    public Set<Product> getProducts() {
+        return products;
     }
 
-    public void setProductShoppingCartsList(List<Product> productShoppingCartsList) {
-        this.productShoppingCartsList = productShoppingCartsList;
+    public void setProducts(Set<Product> products) {
+        this.products = products;
     }
 
     public boolean isCheckedOut() {

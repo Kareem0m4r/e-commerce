@@ -2,8 +2,6 @@ package com.mytask.e_commerce.dto;
 
 import com.mytask.e_commerce.model.Order;
 import com.mytask.e_commerce.model.Role;
-import com.mytask.e_commerce.model.ShoppingCart;
-import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.ArrayList;
@@ -16,8 +14,8 @@ public class UserDTO {
     private String userEmail;
     private Role role;
     private String password;
-    private ShoppingCartDTO userShoppingCartDTO;
-    private List<Order> orderList = new ArrayList<>();
+//    private UserShoppingCartDTO userShoppingCartDTO;
+//    private List<Order> orderList = new ArrayList<>();
 
 
     public long getId() {
@@ -60,19 +58,19 @@ public class UserDTO {
         this.password = password;
     }
 
-    public ShoppingCartDTO getUserShoppingCart() {
-        return userShoppingCartDTO;
-    }
+//    public UserShoppingCartDTO getUserShoppingCart() {
+//        return userShoppingCartDTO;
+//    }
+//
+//    public void setUserShoppingCart(UserShoppingCartDTO userShoppingCartDTO) {
+//        this.userShoppingCartDTO = userShoppingCartDTO;
+//    }
 
-    public void setUserShoppingCart(ShoppingCartDTO userShoppingCartDTO) {
-        this.userShoppingCartDTO = userShoppingCartDTO;
-    }
-
-    public List<Order> getOrderList() {
-        return orderList;
-    }
-
-    public void setOrderList(List<Order> orderList) {
-        this.orderList = orderList;
-    }
+//    public List<Order> getOrderList() {
+//        return orderList;
+//    }
+//
+//    public void setOrderList(List<Order> orderList) {
+//        this.orderList = orderList;
+//    }
 }

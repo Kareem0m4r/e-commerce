@@ -1,6 +1,6 @@
 package com.mytask.e_commerce.mapper;
 
-import com.mytask.e_commerce.dto.ShoppingCartDTO;
+import com.mytask.e_commerce.dto.UserShoppingCartDTO;
 import com.mytask.e_commerce.model.ShoppingCart;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -10,11 +10,11 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface ShoppingCartMapper {
 
-    @Mapping(source = "userName", target = "user.userName")
-    ShoppingCart toEntity(ShoppingCartDTO shoppingCartDTO);
+    @Mapping(source = "userId", target = "user.userId")
+    ShoppingCart toEntity(UserShoppingCartDTO userShoppingCartDTO);
 
-    @Mapping(source = "user.userName", target = "userName")
-    ShoppingCartDTO toDTO (ShoppingCart shoppingCart);
+    @Mapping(source = "user.userId", target = "userId")
+    UserShoppingCartDTO toDTO (ShoppingCart shoppingCart);
 
-    List<ShoppingCartDTO> toDTOList(List<ShoppingCart> shoppingCartList);
+    List<UserShoppingCartDTO> toDTOList(List<ShoppingCart> shoppingCartList);
 }

@@ -6,6 +6,7 @@ import com.mytask.e_commerce.model.User;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +19,7 @@ public class OrderDTO {
 
     private User user;
 
-    private long orderTotalAmount;
+    private BigDecimal orderTotalAmount;
 
     private List<Product> productOrderList = new ArrayList<>();
 
@@ -46,11 +47,11 @@ public class OrderDTO {
         this.user = user;
     }
 
-    public long getOrderTotalAmount() {
+    public BigDecimal getOrderTotalAmount() {
         return orderTotalAmount;
     }
 
-    public void setOrderTotalAmount(long orderTotalAmount) {
+    public void setOrderTotalAmount(BigDecimal orderTotalAmount) {
         this.orderTotalAmount = orderTotalAmount;
     }
 

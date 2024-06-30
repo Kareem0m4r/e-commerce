@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.aspectj.weaver.ast.Or;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -29,10 +30,10 @@ public class Product {
     private int productQuantity;
 
     @Column(name = "price")
-    private long productPrice;
+    private BigDecimal productPrice;
 
-    @ManyToMany(mappedBy = "productShoppingCartsList")
-    private List<ShoppingCart> productShoppingCarts = new ArrayList<>();
+    @ManyToMany(mappedBy = "products")
+    private Set<ShoppingCart> shoppingCarts = new HashSet<>();
 
     @ManyToMany(mappedBy = "productOrderList")
     private List<Order> orderList = new ArrayList<>();
@@ -41,7 +42,7 @@ public class Product {
 
     }
 
-    public Product(String productName, String productDescription, int productQuantity,long productPrice) {
+    public Product(String productName, String productDescription, int productQuantity,BigDecimal productPrice) {
         this.productName = productName;
         this.productDescription = productDescription;
         this.productQuantity = productQuantity;
@@ -80,20 +81,20 @@ public class Product {
         this.productQuantity = productQuantity;
     }
 
-    public long getProductPrice() {
+    public BigDecimal getProductPrice() {
         return productPrice;
     }
 
-    public void setProductPrice(long productPrice) {
+    public void setProductPrice(BigDecimal productPrice) {
         this.productPrice = productPrice;
     }
 
-    public List<ShoppingCart> getProductShoppingCarts() {
-        return productShoppingCarts;
+    public Set<ShoppingCart> getShoppingCarts() {
+        return shoppingCarts;
     }
 
-    public void setProductShoppingCarts(List<ShoppingCart> productShoppingCarts) {
-        this.productShoppingCarts = productShoppingCarts;
+    public void setShoppingCarts(Set<ShoppingCart> shoppingCarts) {
+        this.shoppingCarts = shoppingCarts;
     }
 
     public List<Order> getOrderList() {

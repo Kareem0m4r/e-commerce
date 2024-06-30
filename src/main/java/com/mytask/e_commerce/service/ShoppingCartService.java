@@ -1,22 +1,20 @@
 package com.mytask.e_commerce.service;
 
-import com.mytask.e_commerce.dto.ShoppingCartDTO;
-import com.mytask.e_commerce.dto.UserDTO;
+import com.mytask.e_commerce.dto.UserShoppingCartDTO;
 import com.mytask.e_commerce.model.ShoppingCart;
-import com.mytask.e_commerce.model.User;
 
 import java.util.List;
 
 public interface ShoppingCartService {
 
-    ShoppingCartDTO findById(long id);
+    UserShoppingCartDTO findById(long id);
 
-    ShoppingCart save(ShoppingCartDTO shoppingCartDTO);
+    ShoppingCart save(UserShoppingCartDTO userShoppingCartDTO);
 
-    List<ShoppingCartDTO> findAll();
+    List<UserShoppingCartDTO> findAll();
 
-    ShoppingCartDTO addProductToShoppingCart(long userId,long productId);
+    UserShoppingCartDTO addProductToShoppingCart(long userId, long productId);
 
-
+    UserShoppingCartDTO findByUserId(long userId);
 
 }

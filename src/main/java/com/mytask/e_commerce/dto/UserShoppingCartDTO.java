@@ -1,30 +1,27 @@
 package com.mytask.e_commerce.dto;
 
 import com.mytask.e_commerce.model.Product;
-import com.mytask.e_commerce.model.User;
-import jakarta.persistence.*;
-import lombok.Data;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.math.BigDecimal;
+import java.util.Set;
 
-public class ShoppingCartDTO {
+public class UserShoppingCartDTO {
     private long shoppingCartId;
 
-    private String userName;
+    private String userId;
 
-    private long totalCost;
+    private BigDecimal totalCost;
 
-    private String productName;
+    private Set<ProductDTO> products;
 
     private boolean checkedOut = false;
 
-    public String getUserName() {
-        return userName;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public long getShoppingCartId() {
@@ -35,11 +32,11 @@ public class ShoppingCartDTO {
         this.shoppingCartId = shoppingCartId;
     }
 
-    public long getTotalCost() {
+    public BigDecimal getTotalCost() {
         return totalCost;
     }
 
-    public void setTotalCost(long totalCost) {
+    public void setTotalCost(BigDecimal totalCost) {
         this.totalCost = totalCost;
     }
 
@@ -49,5 +46,13 @@ public class ShoppingCartDTO {
 
     public void setCheckedOut(boolean checkedOut) {
         this.checkedOut = checkedOut;
+    }
+
+    public Set<ProductDTO> getProducts() {
+        return products;
+    }
+
+    public void setProducts(Set<ProductDTO> products) {
+        this.products = products;
     }
 }

@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +26,7 @@ public class Order {
     private User user;
 
     @Column(name = "order_total_amount")
-    private long orderTotalAmount;
+    private BigDecimal orderTotalAmount;
 
     @ManyToMany
     @JoinTable(
@@ -39,7 +40,7 @@ public class Order {
 
     }
 
-    public Order(Status status, User user, long orderTotalAmount, List<Product> productOrderList) {
+    public Order(Status status, User user, BigDecimal orderTotalAmount, List<Product> productOrderList) {
         this.status = status;
         this.user = user;
         this.orderTotalAmount = orderTotalAmount;
@@ -70,11 +71,11 @@ public class Order {
         this.user = user;
     }
 
-    public long getOrderTotalAmount() {
+    public BigDecimal getOrderTotalAmount() {
         return orderTotalAmount;
     }
 
-    public void setOrderTotalAmount(long orderTotalAmount) {
+    public void setOrderTotalAmount(BigDecimal orderTotalAmount) {
         this.orderTotalAmount = orderTotalAmount;
     }
 

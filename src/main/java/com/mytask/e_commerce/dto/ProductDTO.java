@@ -20,9 +20,9 @@ public class ProductDTO {
 
     private long productPrice;
 
-    private long shoppingCartId;
+//  private long shoppingCartId;
 //
-//    private List<Order> orderList = new ArrayList<>();
+//  private List<Order> orderList = new ArrayList<>();
 
 
     public long getProductId() {
@@ -65,13 +65,13 @@ public class ProductDTO {
         this.productPrice = productPrice;
     }
 
-    public long getShoppingCartId() {
-        return shoppingCartId;
-    }
+//    public long getShoppingCartId() {
+//        return shoppingCartId;
+//    }
 
-    public void setShoppingCartId(long shoppingCartId) {
-        this.shoppingCartId = shoppingCartId;
-    }
+//    public void setShoppingCartId(long shoppingCartId) {
+//        this.shoppingCartId = shoppingCartId;
+//    }
 
 //
 //    public List<Order> getOrderList() {
