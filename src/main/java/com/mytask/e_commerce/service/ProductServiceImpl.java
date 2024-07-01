@@ -24,16 +24,26 @@ public class ProductServiceImpl implements ProductService{
     ProductMapper productMapper;
 
     @Override
-    public ProductDTO findById(long id) {
+    public ProductDTO findDTOById(long id) {
         return productRepository.findById(id)
                 .map(productMapper::toDTO)
                 .orElse(new ProductDTO());
     }
 
     @Override
+    public Product findEntityById(long id) {
+        return productRepository.findById(id).orElse(new Product());
+    }
+
+    @Override
     public Product save(ProductDTO productDTO) {
         Product product = productRepository.save(productMapper.toEntity(productDTO));
         return product;
+    }
+
+    @Override
+    public Product update(Product product) {
+        return productRepository.save(product);
     }
 
     @Override

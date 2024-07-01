@@ -63,11 +63,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService{
     @Override
     public UserShoppingCartDTO addProductToShoppingCart(long userId, long productId) {
         User user = userService.findEntityById(userId);
-
-        Product product = productMapper.toEntity(productService.findById(productId));
-
-
-
+        Product product = productService.findEntityById(productId);
         ShoppingCart shoppingCart = user.getUserShoppingCart();
         if (shoppingCart == null) {
             shoppingCart = new ShoppingCart();
@@ -75,7 +71,6 @@ public class ShoppingCartServiceImpl implements ShoppingCartService{
             shoppingCart.setTotalCost(BigDecimal.ZERO);
             shoppingCart.setProducts(new ArrayList<>());
         } else {
-//            shoppingCart = entityManager.merge(shoppingCart);
             if (shoppingCart.getProducts() == null) {
                 shoppingCart.setProducts(new ArrayList<>());
             }
@@ -84,9 +79,6 @@ public class ShoppingCartServiceImpl implements ShoppingCartService{
             shoppingCart.getProducts().add(product);
             shoppingCart.setTotalCost(shoppingCart.getTotalCost().add(product.getProductPrice()));
             product.setProductQuantity((product.getProductQuantity() - 1));
-            //productService.save(productMapper.toDTO(product));
-            //user = userService.save(userMapper.toDTO(user));
-            product = productService.save(productMapper.toDTO(product));
             shoppingCart = shoppingCartRepository.save(shoppingCart);
         }
         else {

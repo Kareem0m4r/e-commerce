@@ -8,9 +8,13 @@ import com.mytask.e_commerce.model.User;
 import java.util.List;
 
 public interface ProductService {
-    ProductDTO findById(long id);
+    ProductDTO findDTOById(long id);
+
+    Product findEntityById(long id);
 
     Product save(ProductDTO productDTO);
+
+    Product update(Product product);
 
     List<ProductDTO> findAll();
 
