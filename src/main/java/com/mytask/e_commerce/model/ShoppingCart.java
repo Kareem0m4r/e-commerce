@@ -34,7 +34,7 @@ public class ShoppingCart {
             joinColumns = @JoinColumn(name = "cart_id"),
             inverseJoinColumns = @JoinColumn(name = "product_id")
     )
-    private Set<Product> products = new HashSet<>();
+    private List<Product> products = new ArrayList<>();
 
     @Column(name = "checked_out")
     private boolean checkedOut = false;
@@ -43,7 +43,7 @@ public class ShoppingCart {
 
     }
 
-    public ShoppingCart(User user, BigDecimal totalCost, Set<Product> products, boolean checkedOut) {
+    public ShoppingCart(User user, BigDecimal totalCost, List<Product> products, boolean checkedOut) {
         this.user = user;
         this.totalCost = totalCost;
         this.products = products;
@@ -74,11 +74,11 @@ public class ShoppingCart {
         this.totalCost = totalCost;
     }
 
-    public Set<Product> getProducts() {
+    public List<Product> getProducts() {
         return products;
     }
 
-    public void setProducts(Set<Product> products) {
+    public void setProducts(List<Product> products) {
         this.products = products;
     }
 

@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
@@ -61,21 +62,22 @@ public class ShoppingCartServiceImpl implements ShoppingCartService{
     @Transactional
     @Override
     public UserShoppingCartDTO addProductToShoppingCart(long userId, long productId) {
-        User user = userMapper.toEntity(userService.findById(userId));
+        User user = userService.findEntityById(userId);
 
         Product product = productMapper.toEntity(productService.findById(productId));
+
+
 
         ShoppingCart shoppingCart = user.getUserShoppingCart();
         if (shoppingCart == null) {
             shoppingCart = new ShoppingCart();
             shoppingCart.setUser(user);
             shoppingCart.setTotalCost(BigDecimal.ZERO);
-            shoppingCart.setProducts(new HashSet<>());
+            shoppingCart.setProducts(new ArrayList<>());
         } else {
-
-            shoppingCart = entityManager.merge(shoppingCart);
+//            shoppingCart = entityManager.merge(shoppingCart);
             if (shoppingCart.getProducts() == null) {
-                shoppingCart.setProducts(new HashSet<>());
+                shoppingCart.setProducts(new ArrayList<>());
             }
         }
         if (product.getProductQuantity()>0) {
@@ -83,14 +85,15 @@ public class ShoppingCartServiceImpl implements ShoppingCartService{
             shoppingCart.setTotalCost(shoppingCart.getTotalCost().add(product.getProductPrice()));
             product.setProductQuantity((product.getProductQuantity() - 1));
             //productService.save(productMapper.toDTO(product));
+            //user = userService.save(userMapper.toDTO(user));
+            product = productService.save(productMapper.toDTO(product));
             shoppingCart = shoppingCartRepository.save(shoppingCart);
-
         }
         else {
             throw new RuntimeException("product is out of stock");
         }
 
-        return shoppingCartMapper.toDTO(shoppingCartRepository.save(shoppingCart));
+        return shoppingCartMapper.toDTO(shoppingCart);
     }
 
     @Override

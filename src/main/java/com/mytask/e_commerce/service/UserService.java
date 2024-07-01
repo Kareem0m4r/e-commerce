@@ -6,7 +6,9 @@ import com.mytask.e_commerce.model.User;
 import java.util.List;
 
 public interface UserService {
-    UserDTO findById(long id);
+    UserDTO findDTOById(long id);
+
+    User findEntityById(long id);
 
     User save(UserDTO userDTO);
 

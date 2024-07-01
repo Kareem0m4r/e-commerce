@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService{
@@ -20,10 +21,15 @@ public class UserServiceImpl implements UserService{
     private ShoppingCartMapper shoppingCartMapper;
 
     @Override
-    public UserDTO findById(long id) {
+    public UserDTO findDTOById(long id) {
         return userRepository.findById(id)
                 .map(userMapper::toDTO)
                 .orElse(new UserDTO());
+    }
+
+    @Override
+    public User findEntityById(long id) {
+        return userRepository.findById(id).orElse(new User());
     }
 
     @Override

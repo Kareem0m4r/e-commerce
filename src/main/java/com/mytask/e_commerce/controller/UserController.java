@@ -27,7 +27,7 @@ public class UserController {
 
     @GetMapping("/{id}")
     public ResponseEntity<UserDTO> getUserbyId(@PathVariable long id){
-        return ResponseEntity.ok(userService.findById(id));
+        return ResponseEntity.ok(userService.findDTOById(id));
     }
 
     @GetMapping("/{userId}/shoppingCart")
