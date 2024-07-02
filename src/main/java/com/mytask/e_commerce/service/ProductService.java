@@ -14,8 +14,6 @@ public interface ProductService {
 
     Product save(ProductDTO productDTO);
 
-    Product update(Product product);
-
     List<ProductDTO> findAll();
 
 }

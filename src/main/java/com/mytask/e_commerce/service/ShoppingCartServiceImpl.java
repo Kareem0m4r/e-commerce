@@ -5,6 +5,7 @@ import com.mytask.e_commerce.mapper.ProductMapper;
 import com.mytask.e_commerce.mapper.ShoppingCartMapper;
 import com.mytask.e_commerce.mapper.UserMapper;
 import com.mytask.e_commerce.model.Product;
+import com.mytask.e_commerce.model.Role;
 import com.mytask.e_commerce.model.ShoppingCart;
 import com.mytask.e_commerce.model.User;
 import com.mytask.e_commerce.repository.ShoppingCartRepository;
@@ -63,6 +64,9 @@ public class ShoppingCartServiceImpl implements ShoppingCartService{
     @Override
     public UserShoppingCartDTO addProductToShoppingCart(long userId, long productId) {
         User user = userService.findEntityById(userId);
+        if (user.getRole().equals(Role.ADMIN)){
+            throw new RuntimeException("this is for usertype customer only");
+        }
         Product product = productService.findEntityById(productId);
         ShoppingCart shoppingCart = user.getUserShoppingCart();
         if (shoppingCart == null) {
@@ -83,6 +87,26 @@ public class ShoppingCartServiceImpl implements ShoppingCartService{
         }
         else {
             throw new RuntimeException("product is out of stock");
+        }
+        return shoppingCartMapper.toDTO(shoppingCart);
+    }
+
+    @Override
+    public UserShoppingCartDTO removeProductFromShoppingCart(long userId, long productId) {
+        User user = userService.findEntityById(userId);
+        Product product = productService.findEntityById(productId);
+        ShoppingCart shoppingCart = user.getUserShoppingCart();
+        if (shoppingCart != null){
+            if (shoppingCart.getProducts().contains(product)){
+                shoppingCart.getProducts().remove(product);
+                shoppingCart.setTotalCost(shoppingCart.getTotalCost().subtract(product.getProductPrice()));
+                product.setProductQuantity(product.getProductQuantity() + 1);
+                shoppingCart = shoppingCartRepository.save(shoppingCart);
+            }else {
+                throw  new RuntimeException("product not found in cart");
+            }
+        }else {
+            throw new RuntimeException("user has no shopping cart");
         }
 
         return shoppingCartMapper.toDTO(shoppingCart);

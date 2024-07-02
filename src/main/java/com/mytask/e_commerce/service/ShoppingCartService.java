@@ -15,6 +15,8 @@ public interface ShoppingCartService {
 
     UserShoppingCartDTO addProductToShoppingCart(long userId, long productId);
 
+    UserShoppingCartDTO removeProductFromShoppingCart(long userId, long productId);
+
     UserShoppingCartDTO findByUserId(long userId);
 
 }

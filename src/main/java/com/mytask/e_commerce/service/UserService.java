@@ -12,7 +12,7 @@ public interface UserService {
 
     User save(UserDTO userDTO);
 
-    User update(User user);
+   // User update(User user);
 
     List<UserDTO> findAll();
 

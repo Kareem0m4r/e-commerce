@@ -18,11 +18,11 @@ public class UserDTO {
 //    private List<Order> orderList = new ArrayList<>();
 
 
-    public long getId() {
+    public long getUserId() {
         return userId;
     }
 
-    public void setId(long userId) {
+    public void setUserId(long userId) {
         this.userId = userId;
     }
 

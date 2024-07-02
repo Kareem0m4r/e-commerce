@@ -2,7 +2,6 @@ package com.mytask.e_commerce.controller;
 
 import com.mytask.e_commerce.dto.UserShoppingCartDTO;
 import com.mytask.e_commerce.dto.UserDTO;
-import com.mytask.e_commerce.mapper.ProductMapper;
 import com.mytask.e_commerce.model.User;
 import com.mytask.e_commerce.service.ProductService;
 import com.mytask.e_commerce.service.ShoppingCartService;
@@ -35,15 +34,20 @@ public class UserController {
         return ResponseEntity.ok(shoppingCartService.findByUserId(userId));
     }
 
-    @PostMapping("/{userId}/{productId}")
+    @PostMapping("/add/{userId}/{productId}")
     public UserShoppingCartDTO addProductToShoppingCart(@PathVariable long userId, @PathVariable long productId){
 
         return shoppingCartService.addProductToShoppingCart(userId,productId);
     }
 
+    @PostMapping("/remove/{userId}/{productId}")
+    public UserShoppingCartDTO removeProductFromShoppingCart(@PathVariable long userId, @PathVariable long productId){
+
+        return shoppingCartService.removeProductFromShoppingCart(userId,productId);
+    }
+
     @PostMapping()
     public User saveUser(@RequestBody UserDTO userDTO){
-        userDTO.setId(0);
         return (userService.save(userDTO));
     }
 
