@@ -23,4 +23,9 @@ public class OrderController {
     public List<OrderDTO> findALl(){
         return orderService.findAll();
     }
+
+    @GetMapping("/history/{userId}")
+    public List<OrderDTO> findOrderHistoryByUserId(@PathVariable long userId){
+        return orderService.findOrderHistoryByUserId(userId);
+    }
 }

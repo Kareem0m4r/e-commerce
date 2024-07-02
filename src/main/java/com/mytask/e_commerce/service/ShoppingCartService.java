@@ -19,4 +19,6 @@ public interface ShoppingCartService {
 
     UserShoppingCartDTO findByUserId(long userId);
 
+    ShoppingCart clearShoppingCart(ShoppingCart shoppingCart);
+
 }

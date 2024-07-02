@@ -17,7 +17,7 @@ public class OrderDTO {
 
     private Status status;
 
-    private User user;
+    private long userId;
 
     private BigDecimal orderTotalAmount;
 
@@ -39,12 +39,12 @@ public class OrderDTO {
         this.status = status;
     }
 
-    public User getUser() {
-        return user;
+    public long getUserId() {
+        return userId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserId(long userId) {
+        this.userId = userId;
     }
 
     public BigDecimal getOrderTotalAmount() {

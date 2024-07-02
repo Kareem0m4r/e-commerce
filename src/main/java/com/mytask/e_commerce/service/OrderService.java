@@ -15,4 +15,8 @@ public interface OrderService {
     Order save(OrderDTO orderDTO);
 
     List<OrderDTO> findAll();
+
+    List<OrderDTO> findOrderHistoryByUserId(long userId);
+
+    OrderDTO shoppingCartCheckOut(Long userId);
 }

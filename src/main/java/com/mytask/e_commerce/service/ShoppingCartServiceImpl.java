@@ -18,6 +18,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ShoppingCartServiceImpl implements ShoppingCartService{
@@ -38,8 +39,8 @@ public class ShoppingCartServiceImpl implements ShoppingCartService{
     @Autowired
     private UserMapper userMapper;
 
-    @Autowired
-    private EntityManager entityManager;
+//    @Autowired
+//    private EntityManager entityManager;
 
     @Override
     public UserShoppingCartDTO findById(long id) {
@@ -115,5 +116,23 @@ public class ShoppingCartServiceImpl implements ShoppingCartService{
     @Override
     public UserShoppingCartDTO findByUserId(long userId) {
         return shoppingCartMapper.toDTO(shoppingCartRepository.findShoppingCartsByUser_UserId(userId));
+    }
+
+
+
+    @Override
+    public ShoppingCart clearShoppingCart(ShoppingCart shoppingCart) {
+        if (shoppingCart != null){
+            shoppingCart.setCheckedOut(false);
+            shoppingCart.setTotalCost(null);
+            shoppingCart.setProducts(null);
+            shoppingCart = shoppingCartRepository.save(shoppingCart);
+        }
+        else {
+            throw new RuntimeException("shopping cart not found");
+        }
+
+        return shoppingCart;
+
     }
 }

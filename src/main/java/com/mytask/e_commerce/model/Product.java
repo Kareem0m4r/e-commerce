@@ -1,5 +1,6 @@
 package com.mytask.e_commerce.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,9 +33,11 @@ public class Product {
     @Column(name = "price")
     private BigDecimal productPrice;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "products")
     private Set<ShoppingCart> shoppingCarts = new HashSet<>();
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "productOrderList")
     private List<Order> orderList = new ArrayList<>();
 
