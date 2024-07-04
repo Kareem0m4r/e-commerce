@@ -2,6 +2,7 @@ package com.mytask.e_commerce.dto;
 
 import com.mytask.e_commerce.model.Product;
 import com.mytask.e_commerce.enums.Status;
+import com.mytask.e_commerce.model.ProductOrder;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ public class OrderDTO {
 
     private BigDecimal orderTotalAmount;
 
-    private List<Product> productOrderList = new ArrayList<>();
+    private List<ProductOrder> productOrderList = new ArrayList<>();
 
     public long getOrderId() {
         return orderId;
@@ -52,11 +53,11 @@ public class OrderDTO {
         this.orderTotalAmount = orderTotalAmount;
     }
 
-    public List<Product> getProductOrderList() {
+    public List<ProductOrder> getProductOrderList() {
         return productOrderList;
     }
 
-    public void setProductOrderList(List<Product> productOrderList) {
+    public void setProductOrderList(List<ProductOrder> productOrderList) {
         this.productOrderList = productOrderList;
     }
 

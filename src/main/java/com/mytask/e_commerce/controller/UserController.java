@@ -51,9 +51,10 @@ public class UserController {
         return shoppingCartService.removeProductFromShoppingCart(Integer.parseInt(auth.getName()),productId);
     }
 
-    @PostMapping("/checkout/{userId}")
-    public OrderDTO shoppingCartCheckOut(@PathVariable Long userId){
-        return orderService.shoppingCartCheckOut(userId);
+    @PostMapping("/checkout")
+    public OrderDTO shoppingCartCheckOut(){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        return orderService.shoppingCartCheckOut(Integer.parseInt(auth.getName()));
     }
 
     @PostMapping()

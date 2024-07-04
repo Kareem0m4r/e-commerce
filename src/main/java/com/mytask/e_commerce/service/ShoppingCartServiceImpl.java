@@ -129,7 +129,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService{
         if (shoppingCart != null){
             shoppingCart.setCheckedOut(false);
             shoppingCart.setTotalCost(null);
-            shoppingCart.setProductShoppingCartList(null);
+            shoppingCart.getProductShoppingCartList().clear();
             shoppingCart = shoppingCartRepository.save(shoppingCart);
         }
         else {

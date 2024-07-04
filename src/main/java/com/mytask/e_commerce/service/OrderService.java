@@ -1,9 +1,7 @@
 package com.mytask.e_commerce.service;
 
 import com.mytask.e_commerce.dto.OrderDTO;
-import com.mytask.e_commerce.dto.ProductDTO;
 import com.mytask.e_commerce.model.Order;
-import com.mytask.e_commerce.model.Product;
 
 import java.util.List;
 
@@ -18,5 +16,5 @@ public interface OrderService {
 
     List<OrderDTO> findOrderHistoryByUserId(long userId);
 
-    OrderDTO shoppingCartCheckOut(Long userId);
+    OrderDTO shoppingCartCheckOut(long userId);
 }

@@ -38,8 +38,8 @@ public class Product {
     private List<ProductShoppingCart> productShoppingCartList = new ArrayList<>();
 
     @JsonIgnore
-    @ManyToMany(mappedBy = "productOrderList")
-    private List<Order> orderList = new ArrayList<>();
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ProductOrder> productOrderList = new ArrayList<>();
 
     public Product(){
 
@@ -100,11 +100,11 @@ public class Product {
         this.productShoppingCartList = productShoppingCartList;
     }
 
-    public List<Order> getOrderList() {
-        return orderList;
+    public List<ProductOrder> getProductOrderList() {
+        return productOrderList;
     }
 
-    public void setOrderList(List<Order> orderList) {
-        this.orderList = orderList;
+    public void setProductOrderList(List<ProductOrder> productOrderList) {
+        this.productOrderList = productOrderList;
     }
 }

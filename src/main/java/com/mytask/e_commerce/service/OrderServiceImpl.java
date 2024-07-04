@@ -50,23 +50,12 @@ public class OrderServiceImpl implements OrderService{
     }
 
     @Override
-    public OrderDTO shoppingCartCheckOut(Long userId) {
-       ShoppingCart shoppingCart = userService.findEntityById(userId).getUserShoppingCart();
+    public OrderDTO shoppingCartCheckOut(long userId) {
+        ShoppingCart shoppingCart = userService.findEntityById(userId).getUserShoppingCart();
         Order order = new Order();
-//        if (!shoppingCart.getProducts().isEmpty()) {
-//           shoppingCart.setCheckedOut(true);
-//           order.setOrderTotalAmount(shoppingCart.getTotalCost());
-//           order.setProductOrderList(new ArrayList<>(shoppingCart.getProducts()));
-//           order.setUser(shoppingCart.getUser());
-//           order.setStatus(Status.Pending);
-//           orderRepository.save(order);
-//           shoppingCartService.clearShoppingCart(shoppingCart);
-//       }else {
-//
-//            throw new RuntimeException("shopping cart is empty");
-//        }
-
-
+        order = order.checkOut(shoppingCart);
+        orderRepository.save(order);
+        shoppingCartService.clearShoppingCart(shoppingCart);
         return orderMapper.toDTO(order);
     }
 }

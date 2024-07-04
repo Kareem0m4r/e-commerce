@@ -30,12 +30,16 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+        httpSecurity.authorizeHttpRequests(c->c
+                .requestMatchers(HttpMethod.GET, "/users").hasAuthority("ADMIN")
+                .requestMatchers(HttpMethod.POST,"/users/**").hasAnyAuthority("CUSTOMER","ADMIN")
+
+
+        );
+
 
         httpSecurity.authorizeHttpRequests(c->
-                c.requestMatchers(HttpMethod.GET, "/users").hasAuthority("ADMIN"));
-        httpSecurity.authorizeHttpRequests(c->
-                c.requestMatchers(HttpMethod.POST,"users/**").hasAuthority("CUSTOMER"));
-
+                c.requestMatchers(HttpMethod.POST,"users/**").hasAnyAuthority("CUSTOMER"));
         httpSecurity.httpBasic();
         httpSecurity.csrf().disable();
         return httpSecurity.build();
