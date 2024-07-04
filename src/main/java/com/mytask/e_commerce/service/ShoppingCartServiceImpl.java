@@ -5,20 +5,16 @@ import com.mytask.e_commerce.mapper.ProductMapper;
 import com.mytask.e_commerce.mapper.ShoppingCartMapper;
 import com.mytask.e_commerce.mapper.UserMapper;
 import com.mytask.e_commerce.model.Product;
-import com.mytask.e_commerce.model.Role;
+import com.mytask.e_commerce.enums.Role;
 import com.mytask.e_commerce.model.ShoppingCart;
 import com.mytask.e_commerce.model.User;
 import com.mytask.e_commerce.repository.ShoppingCartRepository;
-import jakarta.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ShoppingCartServiceImpl implements ShoppingCartService{
@@ -65,31 +61,36 @@ public class ShoppingCartServiceImpl implements ShoppingCartService{
     @Override
     public UserShoppingCartDTO addProductToShoppingCart(long userId, long productId) {
         User user = userService.findEntityById(userId);
-        if (user.getRole().equals(Role.ADMIN)){
-            throw new RuntimeException("this is for usertype customer only");
-        }
         Product product = productService.findEntityById(productId);
         ShoppingCart shoppingCart = user.getUserShoppingCart();
-        if (shoppingCart == null) {
-            shoppingCart = new ShoppingCart();
+        if (shoppingCart == null){
+            shoppingCart= new ShoppingCart();
             shoppingCart.setUser(user);
-            shoppingCart.setTotalCost(BigDecimal.ZERO);
-            shoppingCart.setProducts(new ArrayList<>());
-        } else {
-            if (shoppingCart.getProducts() == null) {
-                shoppingCart.setProducts(new ArrayList<>());
-            }
+            shoppingCart.setTotalCost(BigDecimal.valueOf(0));
         }
-        if (product.getProductQuantity()>0) {
-            shoppingCart.getProducts().add(product);
-            shoppingCart.setTotalCost(shoppingCart.getTotalCost().add(product.getProductPrice()));
-            product.setProductQuantity((product.getProductQuantity() - 1));
-            shoppingCart = shoppingCartRepository.save(shoppingCart);
-        }
-        else {
-            throw new RuntimeException("product is out of stock");
-        }
-        return shoppingCartMapper.toDTO(shoppingCart);
+        shoppingCart.addProduct(product);
+        shoppingCartRepository.save(shoppingCart);
+//        if (shoppingCart == null) {
+//            shoppingCart = new ShoppingCart();
+//            shoppingCart.setUser(user);
+//            shoppingCart.setTotalCost(BigDecimal.ZERO);
+//            shoppingCart.setProducts(new ArrayList<>());
+//        } else {
+//            if (shoppingCart.getProducts() == null) {
+//                shoppingCart.setProducts(new ArrayList<>());
+//            }
+//        }
+//        if (product.getProductQuantity()>0) {
+//            shoppingCart.getProducts().add(product);
+//            shoppingCart.setTotalCost(shoppingCart.getTotalCost().add(product.getProductPrice()));
+//            product.setProductQuantity((product.getProductQuantity() - 1));
+//            shoppingCart = shoppingCartRepository.save(shoppingCart);
+//        }
+//        else {
+//            throw new RuntimeException("product is out of stock");
+//        }
+        UserShoppingCartDTO userShoppingCartDTO = shoppingCartMapper.toDTO(shoppingCart);
+        return userShoppingCartDTO;
     }
 
     @Override
@@ -98,19 +99,22 @@ public class ShoppingCartServiceImpl implements ShoppingCartService{
         Product product = productService.findEntityById(productId);
         ShoppingCart shoppingCart = user.getUserShoppingCart();
         if (shoppingCart != null){
-            if (shoppingCart.getProducts().contains(product)){
-                shoppingCart.getProducts().remove(product);
-                shoppingCart.setTotalCost(shoppingCart.getTotalCost().subtract(product.getProductPrice()));
-                product.setProductQuantity(product.getProductQuantity() + 1);
-                shoppingCart = shoppingCartRepository.save(shoppingCart);
-            }else {
-                throw  new RuntimeException("product not found in cart");
-            }
-        }else {
-            throw new RuntimeException("user has no shopping cart");
+            shoppingCart.removeProduct(product);
         }
+//            if (shoppingCart.getProducts().contains(product)){
+//                shoppingCart.getProducts().remove(product);
+//                shoppingCart.setTotalCost(shoppingCart.getTotalCost().subtract(product.getProductPrice()));
+//                product.setProductQuantity(product.getProductQuantity() + 1);
+//                shoppingCart = shoppingCartRepository.save(shoppingCart);
+//            }else {
+//                throw  new RuntimeException("product not found in cart");
+//            }
+//        }else {
+//            throw new RuntimeException("user has no shopping cart");
+//        }
 
-        return shoppingCartMapper.toDTO(shoppingCart);
+   //     return shoppingCartMapper.toDTO(shoppingCart);
+        return shoppingCartMapper.toDTO(shoppingCartRepository.save(shoppingCart));
     }
 
     @Override
@@ -125,7 +129,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService{
         if (shoppingCart != null){
             shoppingCart.setCheckedOut(false);
             shoppingCart.setTotalCost(null);
-            shoppingCart.setProducts(null);
+            shoppingCart.setProductShoppingCartList(null);
             shoppingCart = shoppingCartRepository.save(shoppingCart);
         }
         else {

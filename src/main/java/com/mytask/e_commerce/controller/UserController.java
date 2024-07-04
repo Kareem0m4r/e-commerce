@@ -9,6 +9,8 @@ import com.mytask.e_commerce.service.ShoppingCartService;
 import com.mytask.e_commerce.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,22 +33,22 @@ public class UserController {
         return ResponseEntity.ok(userService.findDTOById(id));
     }
 
-    @GetMapping("/{userId}/shoppingCart")
-    public ResponseEntity<UserShoppingCartDTO> getShoppingCartForUser(@PathVariable long userId){
-
-        return ResponseEntity.ok(shoppingCartService.findByUserId(userId));
+    @GetMapping("/shoppingcart")
+    public UserShoppingCartDTO getShoppingCartForUser(){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        return (shoppingCartService.findByUserId(Integer.parseInt(auth.getName())));
     }
 
-    @PostMapping("/add/{userId}/{productId}")
-    public UserShoppingCartDTO addProductToShoppingCart(@PathVariable long userId, @PathVariable long productId){
-
-        return shoppingCartService.addProductToShoppingCart(userId,productId);
+    @PostMapping("/add/{productId}")
+    public UserShoppingCartDTO addProductToShoppingCart(@PathVariable long productId){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        return shoppingCartService.addProductToShoppingCart(Integer.parseInt(auth.getName()),productId);
     }
 
-    @PostMapping("/remove/{userId}/{productId}")
-    public UserShoppingCartDTO removeProductFromShoppingCart(@PathVariable long userId, @PathVariable long productId){
-
-        return shoppingCartService.removeProductFromShoppingCart(userId,productId);
+    @PostMapping("/remove/{productId}")
+    public UserShoppingCartDTO removeProductFromShoppingCart(@PathVariable long productId){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        return shoppingCartService.removeProductFromShoppingCart(Integer.parseInt(auth.getName()),productId);
     }
 
     @PostMapping("/checkout/{userId}")

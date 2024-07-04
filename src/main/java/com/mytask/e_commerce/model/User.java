@@ -1,9 +1,7 @@
 package com.mytask.e_commerce.model;
 
+import com.mytask.e_commerce.enums.Role;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,10 +21,13 @@ public class User {
     private String userEmail;
 
     @Column(name = "role")
-    private Role role;
+    private String role;
 
     @Column(name = "password")
     private String password;
+
+    @Column(name = "active")
+    private boolean active = true;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private ShoppingCart userShoppingCart;
@@ -38,12 +39,14 @@ public class User {
 
     }
 
-    public User(String userName, String userEmail, Role role, String password) {
+    public User(String userName, String userEmail, String role, String password,boolean active) {
         this.userName = userName;
         this.userEmail = userEmail;
         this.role = role;
         this.password = password;
+        this.active = active;
     }
+
 
     public long getUserId() {
         return userId;
@@ -69,11 +72,11 @@ public class User {
         this.userEmail = userEmail;
     }
 
-    public Role getRole() {
+    public String getRole() {
         return role;
     }
 
-    public void setRole(Role role) {
+    public void setRole(String role) {
         this.role = role;
     }
 
@@ -99,5 +102,13 @@ public class User {
 
     public void setOrderList(List<Order> orderList) {
         this.orderList = orderList;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }

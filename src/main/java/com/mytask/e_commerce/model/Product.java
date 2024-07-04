@@ -34,8 +34,8 @@ public class Product {
     private BigDecimal productPrice;
 
     @JsonIgnore
-    @ManyToMany(mappedBy = "products")
-    private Set<ShoppingCart> shoppingCarts = new HashSet<>();
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ProductShoppingCart> productShoppingCartList = new ArrayList<>();
 
     @JsonIgnore
     @ManyToMany(mappedBy = "productOrderList")
@@ -92,12 +92,12 @@ public class Product {
         this.productPrice = productPrice;
     }
 
-    public Set<ShoppingCart> getShoppingCarts() {
-        return shoppingCarts;
+    public List<ProductShoppingCart> getProductShoppingCartList() {
+        return productShoppingCartList;
     }
 
-    public void setShoppingCarts(Set<ShoppingCart> shoppingCarts) {
-        this.shoppingCarts = shoppingCarts;
+    public void setProductShoppingCartList(List<ProductShoppingCart> productShoppingCartList) {
+        this.productShoppingCartList = productShoppingCartList;
     }
 
     public List<Order> getOrderList() {

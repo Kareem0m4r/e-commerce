@@ -1,18 +1,14 @@
 package com.mytask.e_commerce.dto;
 
-import com.mytask.e_commerce.model.Order;
-import com.mytask.e_commerce.model.Role;
+import com.mytask.e_commerce.enums.Role;
 import lombok.Data;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Data
 public class UserDTO {
     private long userId;
     private String userName;
     private String userEmail;
-    private Role role;
+    private String role;
     private String password;
 //    private UserShoppingCartDTO userShoppingCartDTO;
 //    private List<Order> orderList = new ArrayList<>();
@@ -42,11 +38,11 @@ public class UserDTO {
         this.userEmail = userEmail;
     }
 
-    public Role getRole() {
+    public String getRole() {
         return role;
     }
 
-    public void setRole(Role role) {
+    public void setRole(String role) {
         this.role = role;
     }
 

@@ -1,4 +1,4 @@
-package com.mytask.e_commerce.model;
+package com.mytask.e_commerce.enums;
 
 public enum Status {
     Pending,

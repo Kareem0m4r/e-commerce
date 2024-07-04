@@ -1,10 +1,7 @@
 package com.mytask.e_commerce.dto;
 
 import com.mytask.e_commerce.model.Product;
-import com.mytask.e_commerce.model.Status;
-import com.mytask.e_commerce.model.User;
-import jakarta.persistence.*;
-import lombok.Data;
+import com.mytask.e_commerce.enums.Status;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;

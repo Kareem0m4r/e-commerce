@@ -1,4 +1,5 @@
 package com.mytask.e_commerce.model;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,32 +24,86 @@ public class ShoppingCart {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
+    @JsonIgnore
     private User user;
 
     @Column(name = "total_cost")
-    private BigDecimal totalCost;
+    private BigDecimal totalCost = new BigDecimal(0);
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "cart_product",
-            joinColumns = @JoinColumn(name = "cart_id"),
-            inverseJoinColumns = @JoinColumn(name = "product_id")
-    )
-    private List<Product> products = new ArrayList<>();
+
+    @OneToMany(mappedBy = "shoppingCart", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ProductShoppingCart> productShoppingCartList = new ArrayList<>();
 
     @Column(name = "checked_out")
     private boolean checkedOut = false;
+
+    public void addProduct(Product product){
+    for (ProductShoppingCart productShoppingCartItem : productShoppingCartList){
+        if (productShoppingCartItem.getProduct().equals(product)){
+            if (product.getProductQuantity()>1) {
+                productShoppingCartItem.setQuantity(productShoppingCartItem.getQuantity() + 1);
+                product.setProductQuantity(product.getProductQuantity()-1);
+                this.setTotalCost(this.getTotalCost().add(product.getProductPrice()));
+                return;
+            }
+            else {
+                throw new RuntimeException("product is not available anymore");
+            }
+        }
+    }
+        if (product.getProductQuantity()>1) {
+
+            ProductShoppingCart productShoppingCartItem = new ProductShoppingCart();
+            productShoppingCartItem.setShoppingCart(this);
+            productShoppingCartItem.setProduct(product);
+            productShoppingCartItem.setQuantity(1);
+            product.setProductQuantity(product.getProductQuantity()-1);
+            this.setTotalCost(this.getTotalCost().add(product.getProductPrice()));
+            productShoppingCartList.add(productShoppingCartItem);
+        }
+        else {
+            throw new RuntimeException("product is not available anymore");
+        }
+    }
+
+//    public List<Product> refreshShoppingCart (ShoppingCart shoppingCart){
+//        List<Product> productList = new ArrayList<>();
+//        if (this.getProductShoppingCartList() != null){
+//            for (ProductShoppingCart item : this.getProductShoppingCartList()){
+//                productList.add((item.getProduct()));
+//            }
+//        }
+//        return productList;
+//    }
+
+    public void removeProduct(Product product){
+        for (ProductShoppingCart productShoppingCart : productShoppingCartList){
+            if (productShoppingCart.getProduct().equals(product)){
+                if (productShoppingCart.getQuantity()>1){
+                    productShoppingCart.setQuantity(productShoppingCart.getQuantity()-1);
+                }
+                else {
+                    productShoppingCartList.remove(productShoppingCart);
+                }
+                this.setTotalCost(this.getTotalCost().subtract(product.getProductPrice()));
+                product.setProductQuantity(product.getProductQuantity()+1);
+                return;
+            }
+        }
+        throw new RuntimeException("product not found in cart");
+    }
 
     public ShoppingCart(){
 
     }
 
-    public ShoppingCart(User user, BigDecimal totalCost, List<Product> products, boolean checkedOut) {
+    public ShoppingCart(User user, BigDecimal totalCost, List<ProductShoppingCart> productShoppingCartList, boolean checkedOut) {
         this.user = user;
         this.totalCost = totalCost;
-        this.products = products;
+        this.productShoppingCartList = productShoppingCartList;
         this.checkedOut = checkedOut;
     }
+
 
     public long getShoppingCartId() {
         return shoppingCartId;
@@ -74,12 +129,12 @@ public class ShoppingCart {
         this.totalCost = totalCost;
     }
 
-    public List<Product> getProducts() {
-        return products;
+    public List<ProductShoppingCart> getProductShoppingCartList() {
+        return productShoppingCartList;
     }
 
-    public void setProducts(List<Product> products) {
-        this.products = products;
+    public void setProductShoppingCartList(List<ProductShoppingCart> productShoppingCartList) {
+        this.productShoppingCartList = productShoppingCartList;
     }
 
     public boolean isCheckedOut() {

@@ -1,8 +1,11 @@
 package com.mytask.e_commerce.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mytask.e_commerce.model.Product;
+import com.mytask.e_commerce.model.ProductShoppingCart;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Set;
 
 public class UserShoppingCartDTO {
@@ -12,9 +15,21 @@ public class UserShoppingCartDTO {
 
     private BigDecimal totalCost;
 
-    private Set<ProductDTO> products;
+    private List<ProductShoppingCart> productShoppingCartList;
+
 
     private boolean checkedOut = false;
+
+    public UserShoppingCartDTO(){
+
+    }
+
+    public UserShoppingCartDTO(String userId, BigDecimal totalCost, List<ProductShoppingCart> productShoppingCartList, boolean checkedOut) {
+        this.userId = userId;
+        this.totalCost = totalCost;
+        this.productShoppingCartList = productShoppingCartList;
+        this.checkedOut = checkedOut;
+    }
 
     public String getUserId() {
         return userId;
@@ -48,11 +63,13 @@ public class UserShoppingCartDTO {
         this.checkedOut = checkedOut;
     }
 
-    public Set<ProductDTO> getProducts() {
-        return products;
+    public List<ProductShoppingCart> getProductShoppingCartList() {
+        return productShoppingCartList;
     }
 
-    public void setProducts(Set<ProductDTO> products) {
-        this.products = products;
+    public void setProductShoppingCartList(List<ProductShoppingCart> productShoppingCartList) {
+        this.productShoppingCartList = productShoppingCartList;
     }
+
+
 }

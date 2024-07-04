@@ -1,10 +1,7 @@
 package com.mytask.e_commerce.model;
 
+import com.mytask.e_commerce.enums.Status;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
